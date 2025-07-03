@@ -19,17 +19,15 @@ public class App {
         basket1.addProduct(product3);
         basket1.addProduct(product4);
         basket1.addProduct(product5);
-
-        // добавление лишнего товара в корзину
-        basket1.addProduct(product6);
-
         // печать списка товаров в корзине и общей стоимости
         basket1.print();
+        // добавление лишнего товара в корзину
+        basket1.addProduct(product6);
         System.out.println("");
 
         //проверка наличия товаров в корзине
-        basket1.checkProductInBasket("Шоколад");
-        basket1.checkProductInBasket("Чипсы");
+        System.out.println(basket1.checkProductInBasket("Шоколад"));
+        System.out.println(basket1.checkProductInBasket("Чипсы"));
 
         // отчистка корзины
         basket1.cleanBasket();
@@ -38,7 +36,7 @@ public class App {
         basket1.print();
 
         // поиск товаров в пустой корзине
-        basket1.checkProductInBasket("Шоколад");
-        basket1.checkProductInBasket("Чипсы");
+        System.out.println(basket1.checkProductInBasket("Шоколад"));
+        System.out.println(basket1.checkProductInBasket("Чипсы"));
     }
 }

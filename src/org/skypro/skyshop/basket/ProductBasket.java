@@ -17,56 +17,41 @@ public class ProductBasket {
                 return;
             }
         }
-        if (added) {
-            System.out.println("Невозможно добавить продукт");
-        }
+        System.out.println("Невозможно добавить продукт");
     }
 
     public int totalPriceBasket() {
         int totalPrice = 0;
-        for (Product product : products) {
-            totalPrice += product.getPrice();
+        for (int i = 0; i < products.length; i++) {
+            if (products[i] != null) {
+                totalPrice += products[i].getPrice();
+            }
         }
         return totalPrice;
     }
 
     public void print() {
-        int empty = 0;
-        for (int i = 0; i < products.length; i++) {
-            if (products[i] != null) {
-                empty += 1;
+        boolean empty = false;
+        for (Product product : products) {
+            if (product != null) {
+                System.out.println(product.getName() + ": " + product.getPrice() + " руб.");
+                empty = true;
             }
         }
-        if (empty > 0) {
-            for (Product product : products) {
-                System.out.println(product.getName() + ": " + product.getPrice() + " руб.");
-            }
+        if (empty) {
+            System.out.println("Итого: "+totalPriceBasket()+" руб.");
         } else {
             System.out.println("В корзине пусто");
         }
-        if (empty > 0) {
-            System.out.println("Итого: " + totalPriceBasket() + " руб.");
-        }
     }
 
-    public boolean checkProductInBasket(String checkProduct) {
-        boolean check = true;
+    public boolean checkProductInBasket(String checkProduct) {;
         for (Product product : products) {
-            if (product == null) {
-                check = false;
-                break;
-            } else if (product.getName().equals(checkProduct)){
-                check = true;
-            } else {
-                check = false;
+            if (product != null && product.getName().equals(checkProduct)) {
+                return true;
             }
         }
-        if (check == true) {
-            System.out.println(checkProduct + " есть в корзине");
-        } else {
-            System.out.println(checkProduct + " нет в корзине");
-        }
-        return true;
+        return false;
     }
 
     public void cleanBasket() {
