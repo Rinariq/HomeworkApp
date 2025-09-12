@@ -26,8 +26,5 @@ public class App {
         basket1.addProduct(product5);
         // печать списка товаров в корзине и общей стоимости
         basket1.print();
-
-
-
     }
 }

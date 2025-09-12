@@ -12,7 +12,7 @@ public class DiscountedProduct extends Product {
 
     @Override
     public int getPrice() {
-        return price-price*sale/100;
+        return price - price * sale / 100;
     }
 
     @Override
