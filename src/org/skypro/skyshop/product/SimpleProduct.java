@@ -6,6 +6,7 @@ public class SimpleProduct extends Product {
     public SimpleProduct(String name, int price) {
         super(name);
         this.price = price;
+        validatePrice(price);
     }
 
     public int getPrice() {
@@ -20,5 +21,11 @@ public class SimpleProduct extends Product {
     @Override
     public boolean isSpecial() {
         return false;
+    }
+
+    public static void validatePrice(double price) throws IllegalArgumentException {
+        if (price <= 0) {
+            throw new IllegalArgumentException("Цена не может быть меньше или равна 0");
+        }
     }
 }

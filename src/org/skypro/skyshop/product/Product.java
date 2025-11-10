@@ -7,6 +7,7 @@ public abstract class Product implements Searchable {
 
     public Product(String name) {
         this.name = name;
+        validateName(name);
     }
 
     public abstract int getPrice();
@@ -22,9 +23,15 @@ public abstract class Product implements Searchable {
     public String getContentType() {
         return "PRODUCT";
     }
+
     @Override
     public String getName() {
         return this.name;
     }
 
+    public static void validateName(String name) throws IllegalArgumentException {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Название не может быть пустой строкой");
+        }
+    }
 }
