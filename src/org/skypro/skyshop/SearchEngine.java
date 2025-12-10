@@ -3,43 +3,38 @@ package org.skypro.skyshop;
 import org.skypro.skyshop.article.Searchable;
 import org.skypro.skyshop.product.BestResultNotFound;
 
-public class SearchEngine {
-    private Searchable[] searchableItems;
-    private int currentSize;
+import java.util.ArrayList;
+import java.util.List;
 
-    public SearchEngine(int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Размер массива должен быть положительным числом");
-        }
-        this.searchableItems = new Searchable[size];
-        this.currentSize = 0;
+public class SearchEngine {
+    private List<Searchable> searchableItems = new ArrayList<>();
+
+    public SearchEngine() {
+        this.searchableItems = new ArrayList<>();
     }
 
     public void add(Searchable item) {
-        if (currentSize >= searchableItems.length) {
-            throw new IllegalStateException("Search engine is full. Capacity: " + searchableItems.length);
-        }
         if (item == null) {
             throw new IllegalArgumentException("Item cannot be null");
         }
-        searchableItems[currentSize] = item;
-        currentSize++;
+        searchableItems.add(item);
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        if (query == null || query.trim().isEmpty() || currentSize == 0) {
+    public List<Searchable> search(String query) {
+        List<Searchable> results = new ArrayList<>();
+
+        if (query == null || query.trim().isEmpty() || searchableItems.isEmpty()) {
             return results;
         }
-        String lowerQuery = query.toLowerCase();
-        int resultCount = 0;
-        for (int i = 0; i < currentSize && resultCount < 5; i++) {
-            Searchable item = searchableItems[i];
+
+        String lowerQuery = query.toLowerCase().trim();
+
+        for (Searchable item : searchableItems) {
             if (item.getSearchTerm().toLowerCase().contains(lowerQuery)) {
-                results[resultCount] = item;
-                resultCount++;
+                results.add(item);
             }
         }
+
         return results;
     }
 
@@ -60,16 +55,14 @@ public class SearchEngine {
         if (search == null || search.trim().isEmpty()) {
             throw new BestResultNotFound(search);
         }
-
-        if (currentSize == 0) {
+        if (searchableItems.isEmpty()) {
             throw new BestResultNotFound(search);
         }
 
         Searchable bestMatch = null;
         int maxCount = -1;
 
-        for (int i = 0; i < currentSize; i++) {
-            Searchable item = searchableItems[i];
+        for (Searchable item : searchableItems) {
             String searchTerm = item.getSearchTerm();
             if (searchTerm != null) {
                 int count = countOccurrences(searchTerm, search);
@@ -83,11 +76,10 @@ public class SearchEngine {
         if (bestMatch == null) {
             throw new BestResultNotFound(search);
         }
-
         return bestMatch;
     }
 
-        private int countOccurrences(String text, String substring) {
+    private int countOccurrences(String text, String substring) {
         if (text == null || substring == null || substring.isEmpty()) {
             return 0;
         }
@@ -106,10 +98,10 @@ public class SearchEngine {
     }
 
     public int getCurrentSize() {
-        return currentSize;
+        return searchableItems.size();
     }
 
     public int getCapacity() {
-        return searchableItems.length;
+        return Integer.MAX_VALUE;
     }
 }
